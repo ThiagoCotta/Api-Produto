@@ -2,24 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage ('Build Image') {
+        stage ('Inicial') {
             steps {
-                script {
-                    dockerapp = docker.build("andreicardozo/api-produto:${env.BUILD_ID}", '-f ./src/Dockerfile ./src') 
+                steps {
+                    echo 'Iniciando a pipeline'
                 }                
             }
         }
-
-        stage ('Push Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        dockerapp.push('latest')
-                        dockerapp.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
-
     }
 }
